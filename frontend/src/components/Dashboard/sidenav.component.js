@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Icon, InlineIcon } from '@iconify/react';
 import statsDownAlt from '@iconify-icons/gridicons/stats-down-alt';
 import { Nav, Tab, Col, Row } from 'react-bootstrap';
-import AllSensors from './sensorreadings.component';
+import SensorReadings from './sensorreadings.component';
 import bxsUserRectangle from '@iconify-icons/bx/bxs-user-rectangle';
 import sensorIcon from '@iconify-icons/icons8/sensor';
 import AddSensor from './addsensor.component';
@@ -40,7 +40,7 @@ export default class SideNav extends Component {
                         <Col sm={4} md={4} lg={8}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                    <AllSensors name="AllSensors" />
+                                    <SensorReadings name="AllSensors" />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <UserAccount name="UserAccount" />

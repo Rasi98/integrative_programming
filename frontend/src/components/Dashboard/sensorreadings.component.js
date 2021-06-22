@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class AllSensors extends Component {
+export default class SensorReadings extends Component {
     render() {
         return (
             <div  >

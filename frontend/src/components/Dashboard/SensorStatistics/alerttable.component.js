@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table,Form, Col, Card , Row} from 'react-bootstrap';
+import { Table, Card } from 'react-bootstrap';
 
 export default class AlertTable extends Component {
     render() {

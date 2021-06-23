@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Icon, InlineIcon } from '@iconify/react';
 import statsDownAlt from '@iconify-icons/gridicons/stats-down-alt';
 import { Nav, Tab, Col, Row } from 'react-bootstrap';
-import SensorReadings from './sensorreadings.component';
+import SensorReadings from './SensorStatistics/sensorreadings.component';
 import bxsUserRectangle from '@iconify-icons/bx/bxs-user-rectangle';
 import sensorIcon from '@iconify-icons/icons8/sensor';
 import AddSensor from './addsensor.component';

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
+import { ReactComponent as Logo } from "../../logo.svg";
 import "./signin.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class SignIn extends Component {
   state = {

@@ -20,7 +20,8 @@ export default class SignIn extends Component {
 
   render() {
     return (
-      <div className="div-signin">
+
+      <div className="div-signin" style={{backgroundColor:"#e7d9ea"}}>
         <div className="div-signin-logo">
           <Logo />
         </div>
@@ -44,6 +45,7 @@ export default class SignIn extends Component {
           </form>
         </div>
       </div>
+    
     );
   }
 }

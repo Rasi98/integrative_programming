@@ -38,21 +38,17 @@ export default class AddSensor extends Component {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group>
-                  <Form.Label>Notification Type</Form.Label>
-                  <Form.Control as="select" custom name="notification">
-                    <option value={"email"}>Email</option>
-                    <option value={"sms"}>SMS</option>
-                    <option value={"call"}>Call</option>
-                  </Form.Control>
+                <Form.Group controlId="sensorid">
+                  <Form.Label>Sensor ID</Form.Label>
+                  <Form.Control type="text" placeholder="Enter sensor Id" />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Group controlId="sensorid">
-                  <Form.Label>Sensor ID</Form.Label>
-                  <Form.Control type="text" placeholder="Enter sensor Id" />
+                <Form.Group controlId="location">
+                  <Form.Label>Location</Form.Label>
+                  <Form.Control type="text" placeholder="Enter location" />
                 </Form.Group>
               </Col>
               <Col>
@@ -65,15 +61,7 @@ export default class AddSensor extends Component {
                 </Form.Group>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <Form.Group controlId="location">
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control type="text" placeholder="Enter location" />
-                </Form.Group>
-              </Col>
-              <Col></Col>
-            </Row>
+
             <Row className="text-center" style={{ margin: "5px" }}>
               <Col className="text-center">
                 <button

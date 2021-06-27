@@ -7,6 +7,7 @@ import bxsUserRectangle from "@iconify-icons/bx/bxs-user-rectangle";
 import sensorIcon from "@iconify-icons/icons8/sensor";
 import AddSensor from "./addsensor.component";
 import UserAccount from "./userAccount.component";
+import AddUser from "./signup.component";
 
 export default class SideNav extends Component {
   render() {
@@ -57,6 +58,19 @@ export default class SideNav extends Component {
                       <Icon icon={bxsUserRectangle} height="2em" /> My Account
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      eventKey="fourth"
+                      style={{
+                        height: "80px",
+                        paddingTop: "30px",
+                        textAlign: "left",
+                        fontWeight: "bolder",
+                      }}
+                    >
+                      <Icon icon={bxsUserRectangle} height="2em" /> Add Account
+                    </Nav.Link>
+                  </Nav.Item>
                 </Nav>
               </div>
             </Col>
@@ -71,6 +85,9 @@ export default class SideNav extends Component {
                 </Tab.Pane>
                 <Tab.Pane eventKey="third">
                   <UserAccount name="UserAccount" />
+                </Tab.Pane>
+                <Tab.Pane eventKey="fourth">
+                  <AddUser name="AddAccount" />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

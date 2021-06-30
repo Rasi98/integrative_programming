@@ -7,4 +7,5 @@ import com.example.backend.entity.reading.TemperatureReading;
 public interface TemperatureReadingServiceInterface {
     TemperatureReading saveTemperatureReading(TemperatureReading reading);
 
+
 }

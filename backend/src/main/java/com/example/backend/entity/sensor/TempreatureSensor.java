@@ -19,11 +19,7 @@ public class TempreatureSensor extends Sensor {
         this.thresholdtemp = thresholdtemp;
     }
 
-    public float getThresholdtemp() {
-        return thresholdtemp;
-    }
+    public float getThresholdtemp() { return thresholdtemp; }
 
-    public void setThresholdtemp(float thresholdtemp) {
-        this.thresholdtemp = thresholdtemp;
-    }
+    public void setThresholdtemp(float thresholdtemp) { this.thresholdtemp = thresholdtemp; }
 }

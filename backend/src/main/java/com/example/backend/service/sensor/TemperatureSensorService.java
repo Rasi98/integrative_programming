@@ -33,4 +33,9 @@ public class TemperatureSensorService implements TemperatureSensorServiceInterfa
     public List<Reading> getallreadingsofasensor(int k) {
         return temperatureReadingRepository.findBySensorid(k);
     }
+
+    @Override
+    public List<Reading> getallreadingswithalertsofasensor(int k) {
+        return temperatureReadingRepository.findBySensoridAndAlert(k , true);
+    }
 }

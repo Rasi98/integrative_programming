@@ -16,8 +16,8 @@ public class TemperatureReading extends Reading {
     private TemperatureReading(){ }
 
     //constructor with parameters
-    public TemperatureReading(int id, Date date, int sensor_id, float temperaturevalue) {
-        super(id, date, sensor_id);
+    public TemperatureReading(int id, Date date, int sensor_id, float temperaturevalue , boolean alert) {
+        super(id, date, sensor_id , alert);
         this.temperaturevalue = temperaturevalue;
     }
 

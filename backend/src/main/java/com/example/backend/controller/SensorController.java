@@ -41,4 +41,9 @@ public class SensorController {
     public List<Reading> getallreadings(@PathVariable("id")  Integer k){
         return temperatureSensorService.getallreadingsofasensor(k);
     }
+
+    @GetMapping("/getalertsofsensor/{id}")
+    public List<Reading> getallalertreadings(@PathVariable("id")  Integer k){
+        return temperatureSensorService.getallreadingswithalertsofasensor(k);
+    }
 }

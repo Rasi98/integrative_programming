@@ -11,4 +11,5 @@ public interface TemperatureSensorServiceInterface {
     TempreatureSensor addsensor(TempreatureSensor tempreatureSensor);
     List<Sensor> getallsensors();
     List <Reading> getallreadingsofasensor(int k);
+    List <Reading> getallreadingswithalertsofasensor(int k);
 }

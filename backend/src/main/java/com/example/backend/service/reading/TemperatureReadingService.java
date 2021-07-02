@@ -19,6 +19,8 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
     @Override
     public TemperatureReading saveTemperatureReading(TemperatureReading temperatureReading){
        // System.out.println(temperatureReading.getTemperaturevalue());
+
+
       //  temperatureReading.setAlert(true);
         AlertSubject alertSubject = new AlertSubject();
         AlertObserver k1 = new AlertObserverCall(alertSubject , "0183848388");

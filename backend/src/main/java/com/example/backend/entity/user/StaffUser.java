@@ -3,7 +3,7 @@ package com.example.backend.entity.user;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User")
+@Table(name = "StaffUser")
 public class StaffUser extends User {
 
     private String position;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/sensor")
 public class SensorController {
@@ -24,7 +25,7 @@ public class SensorController {
     @Resource(name="temperatureReadingService")
     private TemperatureReadingService temperatureReadingService;
 
-    //Endpoint to save temp reading
+    //Endpoint to add new sensor
     @PostMapping("/addsensor")
     public Sensor addsensor(@RequestBody TempreatureSensor tempreatureSensor){
         return temperatureSensorService.addsensor(tempreatureSensor);

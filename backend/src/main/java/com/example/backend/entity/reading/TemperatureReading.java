@@ -13,7 +13,7 @@ public class TemperatureReading extends Reading {
     private float temperaturevalue;
 
     //default no-args constructor for hibernate to create instances of class
-    private TemperatureReading(){ }
+    public TemperatureReading(){ }
 
     //constructor with parameters
     public TemperatureReading(int id, Date date, int sensor_id, float temperaturevalue , boolean alert) {

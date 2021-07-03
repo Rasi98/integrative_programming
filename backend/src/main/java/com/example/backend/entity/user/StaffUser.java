@@ -11,8 +11,8 @@ public class StaffUser extends User {
     public StaffUser() {
     }
 
-    public StaffUser(int userId, String username, String firstname, String lastname, String email, String telNo, String position, String notificationType) {
-        super(userId, username, firstname, lastname, email, telNo, notificationType);
+    public StaffUser(int userId, String username, String firstname, String lastname, String email, String telNo, String position, String notificationType, String password) {
+        super(userId, username, firstname, lastname, email, telNo, notificationType, password);
         this.position = position;
     }
 

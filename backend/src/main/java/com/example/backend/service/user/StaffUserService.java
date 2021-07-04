@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StaffUserService {
+public class StaffUserService implements StaffUserServiceInterface {
 
     @Autowired
     private StaffUserRepository staffUserRepository;

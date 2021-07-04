@@ -43,6 +43,7 @@ public class SensorController {
         return temperatureSensorService.getallreadingsofasensor(k);
     }
 
+    //Endpoint to get the alert readings of a particular sensor
     @GetMapping("/getalertsofsensor/{id}")
     public List<Reading> getallalertreadings(@PathVariable("id")  Integer k){
         return temperatureSensorService.getallreadingswithalertsofasensor(k);

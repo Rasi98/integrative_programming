@@ -15,11 +15,12 @@ public abstract class User {
     private String email;
     private String telNo;
     private String notificationType;
+    private String password;
 
     public User() {
     }
 
-    public User(int userId, String username, String firstname, String lastname, String email, String telNo, String notificationType) {
+    public User(int userId, String username, String firstname, String lastname, String email, String telNo, String notificationType, String password) {
         this.userId = userId;
         this.username = username;
         this.firstname = firstname;
@@ -27,6 +28,7 @@ public abstract class User {
         this.email = email;
         this.telNo = telNo;
         this.notificationType = notificationType;
+        this.password = password;
     }
 
     public int getUserId() {
@@ -83,5 +85,13 @@ public abstract class User {
 
     public void setNotificationType(String notificationType) {
         this.notificationType = notificationType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

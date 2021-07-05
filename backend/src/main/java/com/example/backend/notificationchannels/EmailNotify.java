@@ -18,12 +18,12 @@ public class EmailNotify {
     public void sendEmail(String emailAddress, String sensorid) {
         //add the send email logic - Thilina
 
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(emailAddress);
-        msg.setSubject("Sensor reading");
-        msg.setText("Sensor ID: " + sensorid);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(emailAddress);
+        message.setSubject("Sensor reading");
+        message.setText("Sensor ID: " + sensorid);
 
-        javaMailSender.send(msg);
+        javaMailSender.send(message);
 
         System.out.println("Email to: " + emailAddress + " Sensor ID: " + sensorid);
     }

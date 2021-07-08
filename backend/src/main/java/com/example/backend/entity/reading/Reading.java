@@ -20,7 +20,7 @@ public abstract class Reading {
     public Reading(int id, Date date, int sensor_id, boolean alert) {
         this.id = id;
         this.date = date;
-        this.sensorid = sensorid;
+        this.sensorid = sensor_id;
         this.alert = alert;
     }
 

@@ -44,6 +44,7 @@ public class SensorController {
     }
 
     //Endpoint to get the alert readings of a particular sensor
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/getalertsofsensor/{id}")
     public List<Reading> getallalertreadings(@PathVariable("id")  Integer k){
         return temperatureSensorService.getallreadingswithalertsofasensor(k);

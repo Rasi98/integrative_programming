@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StaffUserService implements StaffUserServiceInterface{
 
+
     @Autowired
     private StaffUserRepository staffUserRepository;
 

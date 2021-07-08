@@ -1,10 +1,7 @@
 package com.example.backend.service.reading;
 
 
-import com.example.backend.ManageAlerts.AlertObserver;
-import com.example.backend.ManageAlerts.AlertObserverCall;
-import com.example.backend.ManageAlerts.AlertObserverEmail;
-import com.example.backend.ManageAlerts.AlertSubject;
+import com.example.backend.ManageAlerts.*;
 import com.example.backend.entity.reading.TemperatureReading;
 import com.example.backend.entity.sensor.TempreatureSensor;
 import com.example.backend.repository.reading.TemperatureReadingRepository;
@@ -37,6 +34,8 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
         AlertSubject alertSubject = new AlertSubject();
         AlertObserver.alertSubject = alertSubject;
         new AlertObserverEmail("tsdananjaya@gmail.com");
+        new AlertObserverSms("+94703135478");
+        new AlertObserverCall("+94703135478");
         alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         return temperatureReadingRepository.save(temperatureReading);
     }

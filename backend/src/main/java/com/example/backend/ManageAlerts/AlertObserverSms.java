@@ -4,11 +4,12 @@ import com.example.backend.notificationchannels.SmsNotify;
 
 public class AlertObserverSms extends AlertObserver{
 
-    private String phoneNumber;
 
-    public AlertObserverSms(AlertSubject alertSubject, String phoneNumber){
-        this.alertSubject = alertSubject;
-        this.alertSubject.attach(this);
+    private final String phoneNumber;
+
+    public AlertObserverSms(String phoneNumber){
+        //AlertObserver.alertSubject = alertSubject;
+        AlertObserver.alertSubject.attach(this);
         this.phoneNumber = phoneNumber;
     }
 

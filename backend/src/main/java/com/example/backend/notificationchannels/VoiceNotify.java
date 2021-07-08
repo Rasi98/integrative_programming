@@ -8,10 +8,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class VoiceNotify {
-    private String telephoneNumber,sensorid;
     private static VoiceNotify instance = new VoiceNotify();
-    private final static String ACCOUNT_SID = "AC1cb1b3d7509bc80e32acc49e991b8dbc";
-    private final static String AUTH_TOKEN = "114ae0fcc8f75a61ff9d9887f6b6249b";
+    private final static String ACCOUNT_SID = TwilioConfig.getAccountSid();
+    private final static String AUTH_TOKEN = TwilioConfig.getAuthToken();
 
     static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -22,9 +21,8 @@ public class VoiceNotify {
     }
 
     public void sendVoice(String telephoneNumber, String sensorid){
-        //add make a voice call logic - Lakshan
         try {
-            Call.creator(new PhoneNumber("<to-number>"), new PhoneNumber("<from-number>"),
+            Call.creator(new PhoneNumber(telephoneNumber), new PhoneNumber(TwilioConfig.getTrialNo()),
                     new URI("http://demo.twilio.com/docs/voice.xml")).create();
         } catch (URISyntaxException e) {
             e.printStackTrace();

@@ -2,6 +2,9 @@ package com.example.backend.ManageAlerts;
 
 import com.example.backend.notificationchannels.EmailNotify;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
+
 public class AlertObserverEmail extends AlertObserver{
     private String emailAddress;
 
@@ -11,9 +14,14 @@ public class AlertObserverEmail extends AlertObserver{
         this.emailAddress = emailAddress;
     }
 
-    @Override
-    public void update() {
+
+    public void update()  {
        // EmailNotify emailNotify = EmailNotify.getInstance();
-        EmailNotify.getInstance().sendEmail(emailAddress,alertSubject.getSensorid());
+        try{
+            EmailNotify.getInstance().sendEmail(emailAddress,alertSubject.getSensorid());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 }

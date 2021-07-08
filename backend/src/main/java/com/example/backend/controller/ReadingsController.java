@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
+import java.io.IOException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -18,7 +20,7 @@ public class ReadingsController {
 
     //Endpoint to save temperature reading
     @PostMapping("/addreading")
-    public TemperatureReading addreading(@RequestBody TemperatureReading temperatureReading){
+    public TemperatureReading addreading(@RequestBody TemperatureReading temperatureReading) throws IOException, MessagingException {
         return temperatureReadingService.saveTemperatureReading(temperatureReading);
     }
 

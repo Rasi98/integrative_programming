@@ -36,7 +36,7 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
         temperatureReading.setAlert(alert);
         AlertSubject alertSubject = new AlertSubject();
         AlertObserver.alertSubject = alertSubject;
-        new AlertObserverEmail("rajawasamgothama@gmail.com");
+        new AlertObserverEmail("tsdananjaya@gmail.com");
         alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         return temperatureReadingRepository.save(temperatureReading);
     }

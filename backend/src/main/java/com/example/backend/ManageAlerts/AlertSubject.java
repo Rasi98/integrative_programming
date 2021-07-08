@@ -1,5 +1,7 @@
 package com.example.backend.ManageAlerts;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,13 @@ public class AlertSubject {
 
     public void setSensorid(String sensorid) {
         this.sensorid = sensorid;
-        notifyAllObservers();
+        try {
+            notifyAllObservers();
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void attach(AlertObserver alertObserver){

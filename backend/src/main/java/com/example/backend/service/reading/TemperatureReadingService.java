@@ -15,6 +15,9 @@ import com.example.backend.thresholdchecker.CheckerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
+
 @Service
 public class TemperatureReadingService implements TemperatureReadingServiceInterface {
 
@@ -25,7 +28,7 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
     private TemperatureSensorService temperatureSensorService;
 
     @Override
-    public TemperatureReading saveTemperatureReading(TemperatureReading temperatureReading){
+    public TemperatureReading saveTemperatureReading(TemperatureReading temperatureReading) throws IOException, MessagingException {
         CheckerFactory checkerFactory= new CheckerFactory();
         Checker checker = new CheckerFactory().getRelevantChecker("TempreatureSensor");
         boolean alert = checker.thresholdChecker(temperatureReading.getTemperaturevalue() , temperatureSensorService.getDetails(temperatureReading.getSensorid()).getThresholdtemp());
@@ -33,7 +36,7 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
         temperatureReading.setAlert(alert);
         AlertSubject alertSubject = new AlertSubject();
         AlertObserver.alertSubject = alertSubject;
-        new AlertObserverEmail("tsdananjaya@gmail.com");
+        new AlertObserverEmail("rajawasamgothama@gmail.com");
         alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         return temperatureReadingRepository.save(temperatureReading);
     }

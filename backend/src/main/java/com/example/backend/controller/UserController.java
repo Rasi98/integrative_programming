@@ -25,4 +25,9 @@ public class UserController {
     public String signin(@RequestBody StaffUser staffUser){
         return staffUserService.signIn(staffUser.getUsername(), staffUser.getPassword());
     }
+
+    @PostMapping("/getDetails/{id}")
+    public StaffUser  getDetails(@PathVariable("id")  Integer k){
+        return staffUserService.getDetails(k);
+    }
 }

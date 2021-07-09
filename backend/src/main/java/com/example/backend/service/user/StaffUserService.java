@@ -17,7 +17,7 @@ public class StaffUserService implements StaffUserServiceInterface{
     @Override
     public StaffUser saveUser(StaffUser staffUser){
         System.out.println(staffUser);
-        String k = signIn(staffUser.getUsername(), staffUser.getPassword());
+        String k = check(staffUser.getUsername(), staffUser.getPassword());
         if(k.equals("Okay")){
             System.out.println(signIn(staffUser.getUsername(), staffUser.getPassword()));
             System.out.println("Okay");
@@ -31,6 +31,16 @@ public class StaffUserService implements StaffUserServiceInterface{
     public String signIn(String username, String password){
         StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
         if(k!=null){
+            return String.valueOf(k.getUserId());
+        } else{
+            return "Okay";
+        }
+    }
+
+
+    public String check(String username, String password){
+        StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
+        if(k!=null){
             return "can't";
         } else{
             return "Okay";
@@ -39,5 +49,9 @@ public class StaffUserService implements StaffUserServiceInterface{
 
     public List<StaffUser> getNotificationDetails(String type){
         return staffUserRepository.findAllByNotificationType(type);
+    }
+
+    public StaffUser getDetails(Integer k) {
+        return staffUserRepository.findByUserId(k);
     }
 }

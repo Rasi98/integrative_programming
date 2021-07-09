@@ -16,4 +16,6 @@ public interface StaffUserRepository extends UserRepository {
    // List<StaffUser> findAllByNotification_type(String type);
 
     List<StaffUser> findAllByNotificationType(String type);
+
+    StaffUser findByUserId(Integer k);
 }

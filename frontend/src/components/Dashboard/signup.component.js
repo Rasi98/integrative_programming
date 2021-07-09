@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default class AddUser extends Component {
   constructor(props) {
@@ -33,11 +34,37 @@ export default class AddUser extends Component {
       position:this.state.position,
     }
     console.log(staffUser);
-    axios.post("http://localhost:9090/user/adduser",staffUser).then(r =>
-    console.log(r.data)
-    ).catch(err => {
-      window.alert(err)
+    axios.post("http://localhost:9090/user/adduser",staffUser).then((r) => {
+      console.log(r.data)
+      const response = r.data;
+      if(response===null){
+        this.unsuccessfulmessage("Unuccessfull!");
+      }
+      else{
+        this.successfulmessage("Successfully Added!");
+      }
+    }).catch(err => {
+      console.log(err)
    })
+  }
+
+  successfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+  unsuccessfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
 

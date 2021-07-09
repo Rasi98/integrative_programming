@@ -25,14 +25,19 @@ export default class SignIn extends Component {
     }
     axios.post("http://localhost:9090/user/signin",user).then((res)=>{
       console.log(res.data)
-      const response=res.data;
-      if(response==="can't"){
-        this.successfulmessage("Login Successfull");
-        window.location="/dashboard"
+      const id=res.data
+      if(id==="Okay"){
+        this.unsuccessfulmessage("Login Unuccessfull");
       }
       else{
         //alert("wrong credentials!")
-        this.unsuccessfulmessage("Login Unuccessfull");
+        localStorage.setItem("id",id);
+        this.successfulmessage("Login Successfull");
+        window.location="/dashboard"
+
+
+
+
       }
     })
         .catch((err)=>{

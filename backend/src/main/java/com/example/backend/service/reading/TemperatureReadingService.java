@@ -37,26 +37,29 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
         boolean alert = checker.thresholdChecker(temperatureReading.getTemperaturevalue() , temperatureSensorService.getDetails(temperatureReading.getSensorid()).getThresholdtemp());
         System.out.println(String.valueOf(alert));
         temperatureReading.setAlert(alert);
-        AlertSubject alertSubject = new AlertSubject();
-        AlertObserver.alertSubject = alertSubject;
+        if(alert){
+            AlertSubject alertSubject = new AlertSubject();
+            AlertObserver.alertSubject = alertSubject;
 
-        List<StaffUser> staffUserCall = staffUserService.getNotificationDetails("call");
-        List<StaffUser> staffUserSMS = staffUserService.getNotificationDetails("sms");
-        List<StaffUser> staffUserEmail = staffUserService.getNotificationDetails("email");
+            List<StaffUser> staffUserCall = staffUserService.getNotificationDetails("call");
+            List<StaffUser> staffUserSMS = staffUserService.getNotificationDetails("sms");
+            List<StaffUser> staffUserEmail = staffUserService.getNotificationDetails("email");
 
-        for(StaffUser staffUser : staffUserCall){
-            new AlertObserverCall(staffUser.getTelNo());
+            for(StaffUser staffUser : staffUserCall){
+                new AlertObserverCall(staffUser.getTelNo());
+            }
+
+            for(StaffUser staffUser : staffUserSMS){
+                new AlertObserverSms(staffUser.getTelNo());
+            }
+
+            for(StaffUser staffUser : staffUserEmail){
+                new AlertObserverEmail(staffUser.getEmail());
+            }
+
+            alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         }
 
-        for(StaffUser staffUser : staffUserSMS){
-            new AlertObserverSms(staffUser.getTelNo());
-        }
-
-        for(StaffUser staffUser : staffUserEmail){
-            new AlertObserverEmail(staffUser.getEmail());
-        }
-
-        alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         return temperatureReadingRepository.save(temperatureReading);
     }
 

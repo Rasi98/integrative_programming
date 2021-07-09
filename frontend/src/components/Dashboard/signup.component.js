@@ -1,52 +1,80 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Hardcoded values for the moment
-      fname: "Spencer",
-      lname: "James",
-      email: "james@gmail.com",
-      phone: "0114525478",
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
       notificationType: "",
-      position: "Manager",
-      username: "admin",
-      password: "admin",
+      position: "",
+      username: "",
+      password: "",
     };
   }
 
-  makeeditbale() {
-    const btntext = document.querySelector("#btn").innerHTML;
-    console.log(btntext);
-
-    if (btntext === "Edit") {
-      //Make disabled fields available to edit
-      document.getElementById("fname").disabled = false;
-      document.getElementById("lname").disabled = false;
-      document.getElementById("email").disabled = false;
-      document.getElementById("phone").disabled = false;
-      document.getElementById("notify").disabled = false;
-      document.getElementById("position").disabled = false;
-      document.getElementById("username").disabled = false;
-      document.getElementById("password").disabled = false;
-      document.querySelector("#btn").innerHTML = "Save";
-    } else if (btntext === "Save") {
-      //save after edit
-      document.getElementById("fname").disabled = true;
-      document.getElementById("lname").disabled = true;
-      document.getElementById("email").disabled = true;
-      document.getElementById("phone").disabled = true;
-      document.getElementById("notify").disabled = true;
-      document.getElementById("position").disabled = true;
-      document.getElementById("username").disabled = true;
-      document.getElementById("password").disabled = true;
-      document.querySelector("#btn").innerHTML = "Edit";
-      console.log("user updated");
-      //Write the code to update the user details
-    }
+  onchange=(e)=>{
+    this.setState({[e.target.name]: e.target.value})
   }
+
+  Handlesubmit=()=>{
+    const staffUser={
+      firstname:this.state.fname,
+      lastname:this.state.lname,
+      username:this.state.username,
+      password:this.state.password,
+      email:this.state.email,
+      telNo:this.state.phone,
+      notificationType:this.state.notificationType,
+      position:this.state.position,
+    }
+    console.log(staffUser);
+    axios.post("http://localhost:9090/user/adduser",staffUser).then((r) => {
+      console.log(r.data)
+      const response = r.data;
+      if(response===null){
+        this.unsuccessfulmessage("Unuccessfull!");
+      }
+      else{
+        this.successfulmessage("Successfully Added!");
+      }
+    }).catch(err => {
+      console.log(err)
+   })
+  }
+
+  successfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+  unsuccessfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+
+  onchangeNotificationType=(event)=>{
+    this.setState({
+      notificationType: event.target.value
+    })
+    console.log(this.state.notificationType)
+  }
+
 
   render() {
     return (
@@ -65,49 +93,54 @@ export default class AddUser extends Component {
             <Row>
               <Col>
                 {" "}
-                <Form.Group controlId="fname">
+                <Form.Group>
                   <Form.Label>First name</Form.Label>
                   <Form.Control
-                    disabled
+                    name="fname"
                     id="fname"
                     type="text"
                     value={this.state.fname}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
               <Col>
                 {" "}
-                <Form.Group controlId="lname">
+                <Form.Group>
                   <Form.Label>Last name</Form.Label>
                   <Form.Control
                     id="lname"
-                    disabled
+                    name="lname"
                     type="text"
                     value={this.state.lname}
+                    onChange={this.onchange}
+
                   />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <Form.Group controlId="email">
+                <Form.Group>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     id="email"
-                    disabled
+                    name="email"
                     type="text"
                     value={this.state.email}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="phone">
+                <Form.Group>
                   <Form.Label>Phone no.</Form.Label>
                   <Form.Control
                     id="phone"
-                    disabled
-                    type="text"
+                    name="phone"
+                    type="number"
                     value={this.state.phone}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -117,12 +150,11 @@ export default class AddUser extends Component {
                 <Form.Group>
                   <Form.Label>Notification Type</Form.Label>
                   <Form.Control
-                    id="notify"
-                    disabled
                     value={this.state.notificationType}
                     as="select"
                     custom
-                    name="notificationtype"
+                    onChange={this.onchangeNotificationType}
+                    name="notificationType"
                   >
                     <option value={"email"}>Email</option>
                     <option value={"sms"}>SMS</option>
@@ -131,11 +163,12 @@ export default class AddUser extends Component {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="position">
+                <Form.Group>
                   <Form.Label>Position</Form.Label>
                   <Form.Control
                     id="position"
-                    disabled
+                    name="position"
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.position}
                   />
@@ -145,25 +178,27 @@ export default class AddUser extends Component {
             <Row>
               <Col>
                 {" "}
-                <Form.Group controlId="username">
+                <Form.Group>
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     id="username"
-                    disabled
+                    name="username"
                     type="text"
                     value={this.state.username}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
               <Col>
                 {" "}
-                <Form.Group controlId="password">
+                <Form.Group>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     id="password"
-                    disabled
+                    name="password"
                     type="text"
                     value={this.state.password}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -175,7 +210,7 @@ export default class AddUser extends Component {
                   type="button"
                   className="btn btn-primary btn-sm "
                   style={{ width: "50%" }}
-                  onClick={this.makeeditbale}
+                  onClick={this.Handlesubmit}
                 >
                   Add Account
                 </button>

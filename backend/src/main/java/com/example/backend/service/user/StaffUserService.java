@@ -16,7 +16,10 @@ public class StaffUserService implements StaffUserServiceInterface{
 
     @Override
     public StaffUser saveUser(StaffUser staffUser){
-        if(signIn(staffUser.getUsername(), staffUser.getPassword()).equals("Okay")){
+        System.out.println(staffUser);
+        String k = check(staffUser.getUsername(), staffUser.getPassword());
+        if(k.equals("Okay")){
+            System.out.println(signIn(staffUser.getUsername(), staffUser.getPassword()));
             System.out.println("Okay");
             return staffUserRepository.save(staffUser);
         } else{
@@ -28,13 +31,41 @@ public class StaffUserService implements StaffUserServiceInterface{
     public String signIn(String username, String password){
         StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
         if(k!=null){
-            return "Okay";
+            return String.valueOf(k.getUserId());
         } else{
-            return "Can't";
+            return "Okay";
+        }
+    }
+
+
+    public String check(String username, String password){
+        StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
+        if(k!=null){
+            return "can't";
+        } else{
+            return "Okay";
         }
     }
 
     public List<StaffUser> getNotificationDetails(String type){
         return staffUserRepository.findAllByNotificationType(type);
+    }
+
+    public StaffUser getDetails(Integer k) {
+        return staffUserRepository.findByUserId(k);
+    }
+
+    public StaffUser updateDetails(StaffUser staffUser) {
+
+        StaffUser existing = staffUserRepository.findByUserId(staffUser.getUserId());
+        existing.setUsername(staffUser.getUsername());
+        existing.setPassword(staffUser.getPassword());
+        existing.setEmail(staffUser.getEmail());
+        existing.setFirstname(staffUser.getFirstname());
+        existing.setLastname(staffUser.getLastname());
+        existing.setPosition(staffUser.getPosition());
+        existing.setNotificationType(staffUser.getNotificationType());
+        existing.setTelNo(staffUser.getTelNo());
+        return staffUserRepository.save(existing);
     }
 }

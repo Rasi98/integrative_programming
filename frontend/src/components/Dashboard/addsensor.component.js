@@ -1,7 +1,100 @@
+// import React, { Component } from "react";
+// import { Container, Row, Col, Form } from "react-bootstrap";
+
+// export default class AddSensor extends Component {
+//   render() {
+//     return (
+//       <div>
+//         <div
+//           style={{
+//             height: "100%",
+//             width: "1000px",
+//             backgroundColor: "#e7d9ea",
+//             borderRadius: "10px",
+//             padding: "20px",
+//           }}
+//         >
+//           <Container>
+//             <h1
+//               style={{ marginBottom: "20px", fontSize: "large" }}
+//               className="text-center"
+//             >
+//               Add New Sensor
+//             </h1>
+
+//             <Row>
+//               <Col>
+//                 <Form.Group>
+//                   <Form.Label>Sensor Type</Form.Label>
+//                   <Form.Control as="select" custom name="sensortype">
+//                     <option value={"temperature"}>Temperature</option>
+//                     <option value={"humidity"} disabled>
+//                       Humidity
+//                     </option>
+//                     <option value={"pressure"} disabled>
+//                       Pressure
+//                     </option>
+//                   </Form.Control>
+//                 </Form.Group>
+//               </Col>
+//               <Col>
+//                 <Form.Group controlId="sensorid">
+//                   <Form.Label>Sensor ID</Form.Label>
+//                   <Form.Control type="text" placeholder="Enter sensor Id" />
+//                 </Form.Group>
+//               </Col>
+//             </Row>
+//             <Row>
+//               <Col>
+//                 <Form.Group controlId="location">
+//                   <Form.Label>Location</Form.Label>
+//                   <Form.Control type="text" placeholder="Enter location" />
+//                 </Form.Group>
+//               </Col>
+//               <Col>
+//                 <Form.Group controlId="threshold">
+//                   <Form.Label>Threshold Value</Form.Label>
+//                   <Form.Control
+//                     type="number"
+//                     placeholder="Enter threshold value (celcius)"
+//                   />
+//                 </Form.Group>
+//               </Col>
+//             </Row>
+
+//             <Row className="text-center" style={{ margin: "5px" }}>
+//               <Col className="text-center">
+//                 <button
+//                   type="button"
+//                   className="btn btn-primary btn-sm "
+//                   style={{ width: "50%" }}
+//                 >
+//                   Add
+//                 </button>
+//               </Col>
+//             </Row>
+//             <Row className="text-center" style={{ margin: "5px" }}>
+//               <Col>
+//                 <button
+//                   type="button"
+//                   className="btn btn-outline-secondary btn-sm"
+//                   style={{ width: "50%" }}
+//                 >
+//                   clear
+//                 </button>
+//               </Col>
+//             </Row>
+//           </Container>
+//         </div>
+//       </div>
+//     );
+//   }
+// }
+
 import React, { Component } from "react";
 import axios from "axios";
-import SensorService from "../../services/SensorService";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 export default class AddSensor extends Component {
   constructor(props) {
@@ -27,31 +120,71 @@ export default class AddSensor extends Component {
     });
   }
 
+  successfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+  unsuccessfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   onChangeThresholdTemp(event) {
     this.setState({
       thresholdtemp: event.target.value,
     });
   }
 
-  onSubmit(event) {
-    event.preventDefault();
-
+  onSubmit=()=>{
+    //event.preventDefault();
+    console.log("asdasd")
     const sensor = {
-      sensorid: this.state.sensorid,
+     // sensorid: this.state.sensorid,
       location: this.state.location,
       thresholdtemp: this.state.thresholdtemp,
+      addedDate:Date.now()
     };
+    console.log(sensor)
+    axios
+    .post("http://localhost:9090/sensor/addsensor" ,  {location: this.state.location,
+    thresholdtemp: this.state.thresholdtemp,
+    addedDate:Date.now()} )
+    .then((res) => {console.log(res.data)
+    
+    if(res.data!==null)
+      {this.successfulmessage("Sensor Added Successfull");}
+    else{
+      {this.unsuccessfulmessage("Unsuccessfull");}
+    }
+    })
+    .catch((err) => console.error(err));
   }
 
   onReset = () => {
-    this.setState(() => this.initialState);
+     this.setState({
+       location:" ",
+       thresholdtemp:" "
+     }
+
+
+    );
   };
 
-  AddSensor() {
-    axios
-      .post("http://localhost:9090/sensor/addsensor")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.error(err));}
+  // AddSensor(sensor) {
+  //   axios
+  //     .post("http://localhost:9090/sensor/addsensor")
+  //     .then((res) => console.log(res.data))
+  //     .catch((err) => console.error(err));}
 
   render() {
     const { sensorid, location, thresholdtemp } = this.state;
@@ -93,18 +226,7 @@ export default class AddSensor extends Component {
                   </Form.Control>
                 </Form.Group>
               </Col>
-              <Col>
-                <Form.Group controlId="sensorid">
-                  <Form.Label>Sensor ID</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter sensor Id"
-                    autoComplete="off"
-                    value={sensorid}
-                    onChange={this.onChangeSensorId}
-                  />
-                </Form.Group>
-              </Col>
+             
             </Row>
             <Row>
               <Col>
@@ -138,7 +260,7 @@ export default class AddSensor extends Component {
                 <button
                   type="button"
                   className="btn btn-primary btn-sm "
-                  onSubmit={this.onSubmit}
+                  onClick={this.onSubmit}
                   style={{ width: "50%" }}
                 >
                   Add
@@ -150,7 +272,7 @@ export default class AddSensor extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-secondary btn-sm"
-                  onSubmit={this.onReset}
+                  onClick={this.onReset}
                   style={{ width: "50%" }}
                 >
                   Clear

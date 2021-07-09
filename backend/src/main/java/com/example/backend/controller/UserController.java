@@ -16,6 +16,7 @@ public class UserController {
     //Endpoint to save server
     @PostMapping("/adduser")
     public StaffUser adduser(@RequestBody StaffUser staffUser){
+        System.out.println(staffUser);
         return staffUserService.saveUser(staffUser);
     }
 
@@ -23,5 +24,15 @@ public class UserController {
     @PostMapping("/signin")
     public String signin(@RequestBody StaffUser staffUser){
         return staffUserService.signIn(staffUser.getUsername(), staffUser.getPassword());
+    }
+
+    @PostMapping("/getDetails/{id}")
+    public StaffUser  getDetails(@PathVariable("id")  Integer k){
+        return staffUserService.getDetails(k);
+    }
+
+    @PostMapping("/updateDetails/{id}")
+    public StaffUser  updateDetails(@RequestBody StaffUser staffUser){
+        return staffUserService.updateDetails(staffUser);
     }
 }

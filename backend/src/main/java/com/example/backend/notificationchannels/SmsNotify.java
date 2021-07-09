@@ -20,6 +20,6 @@ public class SmsNotify {
 
     public void sendSMS(String telephoneNumber, String sensorid){
         Message.creator(new PhoneNumber(telephoneNumber), new PhoneNumber(TwilioConfig.getTrialNo()),
-                "Message from Spring Boot Application").create();
+                "Please Check the sensorID: " + sensorid).create();
     }
 }

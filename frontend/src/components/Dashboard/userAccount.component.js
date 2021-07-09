@@ -1,23 +1,47 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default class UserAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Hardcoded values for the moment
-      fname: "Spencer",
-      lname: "James",
-      email: "james@gmail.com",
-      phone: "0114525478",
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
       notificationType: "",
-      position: "Manager",
-      username: "admin",
-      password: "admin",
+      position: "",
+      username: "",
+      password: "",
     };
   }
 
-  makeeditbale() {
+  componentDidMount() {
+    const id=localStorage.getItem("id")
+    axios.post("http://localhost:9090/user/getDetails/"+id).then((res)=>{
+      this.setState({
+        fname:res.data.firstname,
+        lname:res.data.lastname,
+        email:res.data.email,
+        phone:res.data.telNo,
+        notificationType:res.data.notificationType,
+        position:res.data.position,
+        username:res.data.username,
+        password:res.data.password,
+      })
+    })
+  }
+
+  onchange=(e)=>{
+    this.setState({[e.target.name]:e.target.value})
+  }
+  onchangenotify=(e)=>{
+    this.setState({notificationType:e.target.value})
+  }
+
+  makeeditbale=()=> {
     const btntext = document.querySelector("#btn").innerHTML;
     console.log(btntext);
 
@@ -45,7 +69,49 @@ export default class UserAccount extends Component {
       document.querySelector("#btn").innerHTML = "Edit";
       console.log("user updated");
       //Write the code to update the user details
+      const idset=localStorage.getItem("id")
+
+      const staffUser={
+        userId:idset,
+        firstname:this.state.fname,
+        lastname:this.state.lname,
+        username:this.state.username,
+        password:this.state.password,
+        email:this.state.email,
+        telNo:this.state.phone,
+        notificationType:this.state.notificationType,
+        position:this.state.position,
+      }
+      axios.post("http://localhost:9090/user/updateDetails/"+idset,staffUser).then((res)=>{
+        console.log(res)
+        const response=res.status;
+        if(response===200){
+          this.successfulmessage("Successfully Updated!");
+        }
+        else{
+          this.unsuccessfulmessage("Unuccessfull!");
+        }
+      })
     }
+  }
+
+  successfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+  unsuccessfulmessage = (msg) => {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: msg,
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   render() {
@@ -75,6 +141,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     disabled
                     id="fname"
+                    name={"fname"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.fname}
                   />
@@ -87,6 +155,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="lname"
                     disabled
+                    name={"lname"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.lname}
                   />
@@ -100,6 +170,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="email"
                     disabled
+                    name={"email"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.email}
                   />
@@ -111,6 +183,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="phone"
                     disabled
+                    name={"phone"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.phone}
                   />
@@ -127,6 +201,7 @@ export default class UserAccount extends Component {
                     value={this.state.notificationType}
                     as="select"
                     custom
+                    onChange={this.onchangenotify}
                     name="notificationtype"
                   >
                     <option value={"email"}>Email</option>
@@ -141,6 +216,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="position"
                     disabled
+                    name={"position"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.position}
                   />
@@ -156,6 +233,8 @@ export default class UserAccount extends Component {
                     id="username"
                     disabled
                     type="text"
+                    name={"username"}
+                    onChange={this.onchange}
                     value={this.state.username}
                   />
                 </Form.Group>
@@ -167,6 +246,8 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="password"
                     disabled
+                    name={"password"}
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.password}
                   />

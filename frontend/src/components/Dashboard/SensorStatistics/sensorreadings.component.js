@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Table } from 'react-bootstrap';
 import Moment from 'react-moment';
 import Chart from "react-google-charts";
+import moment from 'moment';
 
 const siAPI1 = axios.create({
     baseURL: `http://localhost:9090/sensor`
@@ -18,7 +19,7 @@ export default class SensorReadings extends Component {
 
     constructor() {
         super()
-        this.getAllSensors();
+        //this.getAllSensors();
         //this.getAllSensorsReadings();
     }
     state = {
@@ -27,7 +28,12 @@ export default class SensorReadings extends Component {
         show: false,
         table: "",
         sensorReadings:[],
-        readings:[]
+        readings:[],
+        readingsdata:[]
+    }
+
+    componentDidMount(){
+        this.getAllSensors();
     }
 
     showalert = (id) => {
@@ -51,14 +57,8 @@ export default class SensorReadings extends Component {
             }).catch(err => {
              window.alert(err)
           })
-          siAPI1.get(`/getreadingsofsensor/${res.data[0].sensorid}`).then(res=>{
-            console.log(res.data)
-            this.setState({
-              readings:res.data
-            })
-        }).catch(err => {
-         window.alert(err)
-      })
+          this.getReadings(res.data[0].sensorid)
+
         }).catch(err => {
             window.alert(err)
         })
@@ -84,6 +84,7 @@ export default class SensorReadings extends Component {
             this.setState({
               sensorReadings:res.data
             })
+            this.getReadings(id);
         }).catch(err => {
          window.alert(err)
       })
@@ -95,6 +96,14 @@ export default class SensorReadings extends Component {
             this.setState({
               readings:res.data
             })
+            let readingsdata1 = [ ['x', 'Tempreature']];
+            for(const dataObj of res.data){
+                readingsdata1.push([moment(dataObj.date).format('Y MM DD HH:mm'),parseInt(dataObj.temperaturevalue)]);
+                //readingsdata1.push([dataObj.date,parseInt(dataObj.temperaturevalue)]);
+            }
+            this.setState({
+                readingsdata:readingsdata1
+              })
             console.log(res.data)
         }).catch(err => {
          window.alert(err)
@@ -115,21 +124,7 @@ export default class SensorReadings extends Component {
                     chartType="LineChart"
                     borderRadius={'10px'}
                     loader={<div>Loading Chart</div>}
-                    data={[
-                        ['x', 'Tempreature'],
-                        [0, 0],
-                        [1, 10],
-                        [2, 23],
-                        [3, 17],
-                        [4, 18],
-                        [5, 9],
-                        [6, 11],
-                        [7, 27],
-                        [8, 33],
-                        [9, 40],
-                        [10, 32],
-                        [11, 35],
-                    ]}
+                    data={this.state.readingsdata}
                     options={{
                         hAxis: {
                             title: 'Time',

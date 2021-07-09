@@ -16,6 +16,7 @@ public class UserController {
     //Endpoint to save server
     @PostMapping("/adduser")
     public StaffUser adduser(@RequestBody StaffUser staffUser){
+        System.out.println(staffUser);
         return staffUserService.saveUser(staffUser);
     }
 

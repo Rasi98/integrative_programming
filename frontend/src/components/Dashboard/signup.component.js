@@ -1,52 +1,42 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import axios from "axios";
 
 export default class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Hardcoded values for the moment
-      fname: "Spencer",
-      lname: "James",
-      email: "james@gmail.com",
-      phone: "0114525478",
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
       notificationType: "",
-      position: "Manager",
-      username: "admin",
-      password: "admin",
+      position: "",
+      username: "",
+      password: "",
     };
   }
 
-  makeeditbale() {
-    const btntext = document.querySelector("#btn").innerHTML;
-    console.log(btntext);
-
-    if (btntext === "Edit") {
-      //Make disabled fields available to edit
-      document.getElementById("fname").disabled = false;
-      document.getElementById("lname").disabled = false;
-      document.getElementById("email").disabled = false;
-      document.getElementById("phone").disabled = false;
-      document.getElementById("notify").disabled = false;
-      document.getElementById("position").disabled = false;
-      document.getElementById("username").disabled = false;
-      document.getElementById("password").disabled = false;
-      document.querySelector("#btn").innerHTML = "Save";
-    } else if (btntext === "Save") {
-      //save after edit
-      document.getElementById("fname").disabled = true;
-      document.getElementById("lname").disabled = true;
-      document.getElementById("email").disabled = true;
-      document.getElementById("phone").disabled = true;
-      document.getElementById("notify").disabled = true;
-      document.getElementById("position").disabled = true;
-      document.getElementById("username").disabled = true;
-      document.getElementById("password").disabled = true;
-      document.querySelector("#btn").innerHTML = "Edit";
-      console.log("user updated");
-      //Write the code to update the user details
-    }
+  onchange=(e)=>{
+    this.setState({[e.target.name]: e.target.value})
   }
+
+  Handlesubmit=()=>{
+    const staffUser={
+      firstname:this.state.fname,
+      lastname:this.state.lname,
+      username:this.state.username,
+      password:this.state.password,
+      email:this.state.email,
+      telNo:this.state.phone,
+      notificationType:this.state.notificationType,
+      position:this.state.position,
+    }
+    console.log(staffUser);
+    axios.post("http://localhost:9090/user/adduser",staffUser).then(r =>
+    console.log(r.data)
+    )}
+
 
   render() {
     return (
@@ -68,10 +58,11 @@ export default class AddUser extends Component {
                 <Form.Group controlId="fname">
                   <Form.Label>First name</Form.Label>
                   <Form.Control
-                    disabled
+                    name="fname"
                     id="fname"
                     type="text"
                     value={this.state.fname}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -81,9 +72,11 @@ export default class AddUser extends Component {
                   <Form.Label>Last name</Form.Label>
                   <Form.Control
                     id="lname"
-                    disabled
+                    name="lname"
                     type="text"
                     value={this.state.lname}
+                    onChange={this.onchange}
+
                   />
                 </Form.Group>
               </Col>
@@ -94,9 +87,10 @@ export default class AddUser extends Component {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     id="email"
-                    disabled
+                    name="email"
                     type="text"
                     value={this.state.email}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -105,9 +99,10 @@ export default class AddUser extends Component {
                   <Form.Label>Phone no.</Form.Label>
                   <Form.Control
                     id="phone"
-                    disabled
-                    type="text"
+                    name="phone"
+                    type="number"
                     value={this.state.phone}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -117,12 +112,11 @@ export default class AddUser extends Component {
                 <Form.Group>
                   <Form.Label>Notification Type</Form.Label>
                   <Form.Control
-                    id="notify"
-                    disabled
                     value={this.state.notificationType}
                     as="select"
                     custom
-                    name="notificationtype"
+                    onChange={this.onchange}
+                    name="notificationType"
                   >
                     <option value={"email"}>Email</option>
                     <option value={"sms"}>SMS</option>
@@ -135,7 +129,8 @@ export default class AddUser extends Component {
                   <Form.Label>Position</Form.Label>
                   <Form.Control
                     id="position"
-                    disabled
+                    name="position"
+                    onChange={this.onchange}
                     type="text"
                     value={this.state.position}
                   />
@@ -149,9 +144,10 @@ export default class AddUser extends Component {
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     id="username"
-                    disabled
+                    name="username"
                     type="text"
                     value={this.state.username}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -161,9 +157,10 @@ export default class AddUser extends Component {
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     id="password"
-                    disabled
+                    name="password"
                     type="text"
                     value={this.state.password}
+                    onChange={this.onchange}
                   />
                 </Form.Group>
               </Col>
@@ -175,7 +172,7 @@ export default class AddUser extends Component {
                   type="button"
                   className="btn btn-primary btn-sm "
                   style={{ width: "50%" }}
-                  onClick={this.makeeditbale}
+                  onClick={this.Handlesubmit}
                 >
                   Add Account
                 </button>

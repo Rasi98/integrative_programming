@@ -16,6 +16,7 @@ public class StaffUserService implements StaffUserServiceInterface{
 
     @Override
     public StaffUser saveUser(StaffUser staffUser){
+        System.out.println(staffUser);
         if(signIn(staffUser.getUsername(), staffUser.getPassword()).equals("Okay")){
             System.out.println("Okay");
             return staffUserRepository.save(staffUser);

@@ -49,6 +49,11 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
                 new AlertObserverCall(staffUser.getTelNo());
             }
 
+
+       for(StaffUser staffUser : staffUserSMS){
+            new AlertObserverSms(staffUser.getTelNo());
+        }
+
             for(StaffUser staffUser : staffUserSMS){
                 new AlertObserverSms(staffUser.getTelNo());
             }
@@ -56,6 +61,7 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
             for(StaffUser staffUser : staffUserEmail){
                 new AlertObserverEmail(staffUser.getEmail());
             }
+
 
             alertSubject.setSensorid(String.valueOf(temperatureReading.getSensorid()));
         }

@@ -17,7 +17,9 @@ public class StaffUserService implements StaffUserServiceInterface{
     @Override
     public StaffUser saveUser(StaffUser staffUser){
         System.out.println(staffUser);
-        if(signIn(staffUser.getUsername(), staffUser.getPassword()).equals("Okay")){
+        String k = signIn(staffUser.getUsername(), staffUser.getPassword());
+        if(k.equals("Okay")){
+            System.out.println(signIn(staffUser.getUsername(), staffUser.getPassword()));
             System.out.println("Okay");
             return staffUserRepository.save(staffUser);
         } else{
@@ -29,9 +31,9 @@ public class StaffUserService implements StaffUserServiceInterface{
     public String signIn(String username, String password){
         StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
         if(k!=null){
-            return "Okay";
+            return "can't";
         } else{
-            return "Can't";
+            return "Okay";
         }
     }
 

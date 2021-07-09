@@ -35,7 +35,10 @@ export default class AddUser extends Component {
     console.log(staffUser);
     axios.post("http://localhost:9090/user/adduser",staffUser).then(r =>
     console.log(r.data)
-    )}
+    ).catch(err => {
+      window.alert(err)
+   })
+  }
 
 
   render() {

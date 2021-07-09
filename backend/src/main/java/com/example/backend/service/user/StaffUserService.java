@@ -54,4 +54,18 @@ public class StaffUserService implements StaffUserServiceInterface{
     public StaffUser getDetails(Integer k) {
         return staffUserRepository.findByUserId(k);
     }
+
+    public StaffUser updateDetails(StaffUser staffUser) {
+
+        StaffUser existing = staffUserRepository.findByUserId(staffUser.getUserId());
+        existing.setUsername(staffUser.getUsername());
+        existing.setPassword(staffUser.getPassword());
+        existing.setEmail(staffUser.getEmail());
+        existing.setFirstname(staffUser.getFirstname());
+        existing.setLastname(staffUser.getLastname());
+        existing.setPosition(staffUser.getPosition());
+        existing.setNotificationType(staffUser.getNotificationType());
+        existing.setTelNo(staffUser.getTelNo());
+        return staffUserRepository.save(existing);
+    }
 }

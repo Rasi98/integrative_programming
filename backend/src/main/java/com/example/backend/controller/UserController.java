@@ -30,4 +30,9 @@ public class UserController {
     public StaffUser  getDetails(@PathVariable("id")  Integer k){
         return staffUserService.getDetails(k);
     }
+
+    @PostMapping("/updateDetails/{id}")
+    public StaffUser  updateDetails(@RequestBody StaffUser staffUser){
+        return staffUserService.updateDetails(staffUser);
+    }
 }

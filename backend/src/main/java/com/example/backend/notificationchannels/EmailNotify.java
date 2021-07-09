@@ -39,7 +39,7 @@ try {
 
     msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
     msg.setSubject("Sensor Alert");
-    msg.setContent("Please Check the sensorID" + sensorid, "text/html");
+    msg.setContent("Please Check the sensor ID: " + sensorid, "text/html");
     msg.setSentDate(new Date());
 
     Transport.send(msg);

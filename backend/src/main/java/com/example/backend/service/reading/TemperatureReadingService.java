@@ -49,11 +49,6 @@ public class TemperatureReadingService implements TemperatureReadingServiceInter
                 new AlertObserverCall(staffUser.getTelNo());
             }
 
-
-       for(StaffUser staffUser : staffUserSMS){
-            new AlertObserverSms(staffUser.getTelNo());
-        }
-
             for(StaffUser staffUser : staffUserSMS){
                 new AlertObserverSms(staffUser.getTelNo());
             }

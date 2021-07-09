@@ -68,6 +68,14 @@ export default class AddUser extends Component {
   }
 
 
+  onchangeNotificationType=(event)=>{
+    this.setState({
+      notificationType: event.target.value
+    })
+    console.log(this.state.notificationType)
+  }
+
+
   render() {
     return (
       <div>
@@ -85,7 +93,7 @@ export default class AddUser extends Component {
             <Row>
               <Col>
                 {" "}
-                <Form.Group controlId="fname">
+                <Form.Group>
                   <Form.Label>First name</Form.Label>
                   <Form.Control
                     name="fname"
@@ -98,7 +106,7 @@ export default class AddUser extends Component {
               </Col>
               <Col>
                 {" "}
-                <Form.Group controlId="lname">
+                <Form.Group>
                   <Form.Label>Last name</Form.Label>
                   <Form.Control
                     id="lname"
@@ -113,7 +121,7 @@ export default class AddUser extends Component {
             </Row>
             <Row>
               <Col>
-                <Form.Group controlId="email">
+                <Form.Group>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     id="email"
@@ -125,7 +133,7 @@ export default class AddUser extends Component {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="phone">
+                <Form.Group>
                   <Form.Label>Phone no.</Form.Label>
                   <Form.Control
                     id="phone"
@@ -145,7 +153,7 @@ export default class AddUser extends Component {
                     value={this.state.notificationType}
                     as="select"
                     custom
-                    onChange={this.onchange}
+                    onChange={this.onchangeNotificationType}
                     name="notificationType"
                   >
                     <option value={"email"}>Email</option>
@@ -155,7 +163,7 @@ export default class AddUser extends Component {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="position">
+                <Form.Group>
                   <Form.Label>Position</Form.Label>
                   <Form.Control
                     id="position"
@@ -170,7 +178,7 @@ export default class AddUser extends Component {
             <Row>
               <Col>
                 {" "}
-                <Form.Group controlId="username">
+                <Form.Group>
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     id="username"
@@ -183,7 +191,7 @@ export default class AddUser extends Component {
               </Col>
               <Col>
                 {" "}
-                <Form.Group controlId="password">
+                <Form.Group>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     id="password"

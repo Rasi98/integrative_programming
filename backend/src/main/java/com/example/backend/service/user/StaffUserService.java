@@ -5,6 +5,8 @@ import com.example.backend.repository.user.StaffUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StaffUserService implements StaffUserServiceInterface{
 
@@ -30,5 +32,9 @@ public class StaffUserService implements StaffUserServiceInterface{
         } else{
             return "Can't";
         }
+    }
+
+    public List<StaffUser> getNotificationDetails(String type){
+        return staffUserRepository.findAllByNotificationType(type);
     }
 }

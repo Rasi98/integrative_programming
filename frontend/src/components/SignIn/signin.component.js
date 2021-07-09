@@ -47,7 +47,7 @@ export default class SignIn extends Component {
 
   successfulmessage = (msg) => {
     Swal.fire({
-      position: 'top-end',
+      position: 'center',
       icon: 'success',
       title: msg,
       showConfirmButton: false,
@@ -56,7 +56,7 @@ export default class SignIn extends Component {
   }
   unsuccessfulmessage = (msg) => {
     Swal.fire({
-      position: 'top-end',
+      position: 'center',
       icon: 'error',
       title: msg,
       showConfirmButton: false,

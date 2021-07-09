@@ -138,7 +138,7 @@ export default class AddUser extends Component {
                   <Form.Control
                     id="phone"
                     name="phone"
-                    type="number"
+                    type="text"
                     value={this.state.phone}
                     onChange={this.onchange}
                   />

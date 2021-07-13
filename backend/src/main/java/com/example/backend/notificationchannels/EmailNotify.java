@@ -13,15 +13,15 @@ import java.util.Properties;
 public class EmailNotify {
     private String emailAddress, sensorid;
     private static EmailNotify instance = new EmailNotify();
-
     public static EmailNotify getInstance() {
         return instance;
     }
 
 
-    public void sendEmail(String emailAddress, String sensorid) {
+    public void sendEmail(String emailAddress, String sensorid)  {
         //add the send email logic - Thilina
         try {
+
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
@@ -34,37 +34,19 @@ public class EmailNotify {
                     return new PasswordAuthentication("cloudsensorplatform@gmail.com", "alertmanagement");
                 }
             });
-
             Message msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("cloudsensorplatform@gmail.com", false));
 
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
             msg.setSubject("Sensor Alert");
-            msg.setContent("Please Check the sensorID" + sensorid, "text/html");
+            msg.setContent("Please Check the sensor ID: " + sensorid, "text/html");
             msg.setSentDate(new Date());
 
             Transport.send(msg);
             System.out.println("Email to: " + emailAddress + " Sensor ID: " + sensorid);
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             System.out.println(e.getMessage());
         }
-<<<<<<< Updated upstream
-    });
-    Message msg = new MimeMessage(session);
-    msg.setFrom(new InternetAddress("cloudsensorplatform@gmail.com", false));
-
-    msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
-    msg.setSubject("Sensor Alert");
-    msg.setContent("Please Check the sensor ID: " + sensorid, "text/html");
-    msg.setSentDate(new Date());
-
-    Transport.send(msg);
-    System.out.println("Email to: " + emailAddress + " Sensor ID: " + sensorid);
-}
-catch (Exception e){
-    System.out.println(e.getMessage());
-}
-=======
->>>>>>> Stashed changes
     }
 }

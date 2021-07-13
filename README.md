@@ -11,9 +11,9 @@
 ### Front-end - React 
 ### Back-end - Spring Boot, Hibernate, JPA, MySQL
 ### Alert System - Twilio for SMS and Twilio Voice Alert.
-### Database Hosted in remotemysql.com
+### Database Hosted in db4free.net
 ### Backend Hosted in Heroku
 ### Frontend Hosted in Netlify
 
-## Link to System - https://sensorcloudplatform.netlify.app/ 
+## Link to System - https://cloudsensorplatform.netlify.app/ 
 

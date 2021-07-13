@@ -16,11 +16,11 @@ public class VoiceNotify {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     }
 
-    public static VoiceNotify getInstance(){
+    public static VoiceNotify getInstance() {
         return instance;
     }
 
-    public void sendVoice(String telephoneNumber, String sensorid){
+    public void sendVoice(String telephoneNumber, String sensorid) {
         try {
             Call.creator(new PhoneNumber(telephoneNumber), new PhoneNumber(TwilioConfig.getTrialNo()),
                     new URI("http://demo.twilio.com/docs/voice.xml")).create();

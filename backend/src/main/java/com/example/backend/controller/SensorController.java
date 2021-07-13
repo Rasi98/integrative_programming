@@ -26,18 +26,21 @@ public class SensorController {
     private TemperatureReadingService temperatureReadingService;
 
     //Endpoint to add new sensor
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/addsensor")
     public Sensor addsensor(@RequestBody TempreatureSensor tempreatureSensor){
         return temperatureSensorService.addsensor(tempreatureSensor);
     }
 
     //Endpoint to get all sensor details
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/getallsensors")
     public List <Sensor> getallsensordetails(){
         return temperatureSensorService.getallsensors();
     }
 
     //Endpoint to get readings of a particular sensor
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/getreadingsofsensor/{id}")
     public List<Reading> getallreadings(@PathVariable("id")  Integer k){
         return temperatureSensorService.getallreadingsofasensor(k);

@@ -10,7 +10,7 @@ public class TwilioConfig {
     private static String authToken;
     private static String trialNo;
 
-    public TwilioConfig(){
+    public TwilioConfig() {
 
     }
 
@@ -18,7 +18,7 @@ public class TwilioConfig {
         return accountSid;
     }
 
-    public  void setAccountSid(String accountSid) {
+    public void setAccountSid(String accountSid) {
         this.accountSid = accountSid;
     }
 

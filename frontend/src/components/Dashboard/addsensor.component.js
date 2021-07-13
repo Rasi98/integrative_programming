@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 import React, { Component } from "react";
 import axios from "axios";
 import { Container, Row, Col, Form } from "react-bootstrap";
@@ -61,6 +66,7 @@ export default class AddSensor extends Component {
     };
     console.log(sensor);
     axios
+<<<<<<< Updated upstream
       .post("http://localhost:9090/sensor/addsensor", {
         location: this.state.location,
         thresholdtemp: this.state.thresholdtemp,
@@ -79,6 +85,21 @@ export default class AddSensor extends Component {
       })
       .catch((err) => console.error(err));
   };
+=======
+    .post("https://groupprojectmit.herokuapp.com/sensor/addsensor" ,  {location: this.state.location,
+    thresholdtemp: this.state.thresholdtemp,
+    addedDate:Date.now()} )
+    .then((res) => {console.log(res.data)
+    
+    if(res.data!==null)
+      {this.successfulmessage("Sensor Added Successfull");}
+    else{
+      {this.unsuccessfulmessage("Unsuccessfull");}
+    }
+    })
+    .catch((err) => console.error(err));
+  }
+>>>>>>> Stashed changes
 
   onReset = () => {
     this.setState({

@@ -13,26 +13,42 @@ import java.util.Properties;
 public class EmailNotify {
     private String emailAddress, sensorid;
     private static EmailNotify instance = new EmailNotify();
+
     public static EmailNotify getInstance() {
         return instance;
     }
 
 
-    public void sendEmail(String emailAddress, String sensorid)  {
+    public void sendEmail(String emailAddress, String sensorid) {
         //add the send email logic - Thilina
-try {
+        try {
 
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
 
-    Properties props = new Properties();
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.host", "smtp.gmail.com");
-    props.put("mail.smtp.port", "587");
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("cloudsensorplatform@gmail.com", "alertmanagement");
+                }
+            });
 
-    Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-        protected PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication("cloudsensorplatform@gmail.com", "alertmanagement");
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress("cloudsensorplatform@gmail.com", false));
+
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailAddress));
+            msg.setSubject("Sensor Alert");
+            msg.setContent("Please Check the sensorID" + sensorid, "text/html");
+            msg.setSentDate(new Date());
+
+            Transport.send(msg);
+            System.out.println("Email to: " + emailAddress + " Sensor ID: " + sensorid);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+<<<<<<< Updated upstream
     });
     Message msg = new MimeMessage(session);
     msg.setFrom(new InternetAddress("cloudsensorplatform@gmail.com", false));
@@ -48,5 +64,7 @@ try {
 catch (Exception e){
     System.out.println(e.getMessage());
 }
+=======
+>>>>>>> Stashed changes
     }
 }

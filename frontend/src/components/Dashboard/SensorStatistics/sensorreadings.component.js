@@ -9,7 +9,7 @@ import Chart from "react-google-charts";
 import moment from 'moment';
 
 const siAPI1 = axios.create({
-    baseURL: `http://localhost:9090/sensor`
+    baseURL: ` https://groupprojectmit.herokuapp.com/sensor`
 })
 
 
@@ -29,7 +29,8 @@ export default class SensorReadings extends Component {
         table: "",
         sensorReadings:[],
         readings:[],
-        readingsdata:[]
+        readingsdata:[],
+        thresholdtemp:""
     }
 
     componentDidMount(){
@@ -47,7 +48,8 @@ export default class SensorReadings extends Component {
             this.setState({
                 sensorlist: res.data,
                 sensorID: res.data[0].sensorid,
-                show: true
+                show: true,
+                thresholdtemp:res.data[0].thresholdtemp
             })
             siAPI1.get(`/getalertsofsensor/${res.data[0].sensorid}`).then(res=>{
                 console.log(res.data)
@@ -58,6 +60,7 @@ export default class SensorReadings extends Component {
              window.alert(err)
           })
           this.getReadings(res.data[0].sensorid)
+          
 
         }).catch(err => {
             window.alert(err)
@@ -153,9 +156,9 @@ export default class SensorReadings extends Component {
                                         <Row>
                                             <Col>Sensor ID:</Col><Col>{this.state.sensorID} </Col><br />
                                         </Row>
-                                        <Row>
-                                            <Col>Tempreature:</Col><Col> 56 Celcius</Col>
-                                        </Row>
+                                        {/* <Row>
+                                            <Col>Tempreature:</Col><Col> {this.state.thresholdtemp} Celcius</Col>
+                                        </Row> */}
                                     </div>
 
                                 </Card.Body>
@@ -168,6 +171,7 @@ export default class SensorReadings extends Component {
                         <Card style={{ backgroundColor: "white", borderRadius: "10px" }}>
                             <Card.Body>
                                 <div>
+                                    <h3>Alert Readings</h3>
                                     <Table striped bordered hover size="sm" >
                                         <thead>
                                             <tr>

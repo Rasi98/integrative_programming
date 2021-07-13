@@ -37,7 +37,7 @@ public class StaffUserService implements StaffUserServiceInterface{
         }
     }
 
-
+    @Override
     public String check(String username, String password){
         StaffUser k = staffUserRepository.findByUsernameAndPassword(username,password);
         if(k!=null){
@@ -46,15 +46,17 @@ public class StaffUserService implements StaffUserServiceInterface{
             return "Okay";
         }
     }
-
+    @Override
     public List<StaffUser> getNotificationDetails(String type){
         return staffUserRepository.findAllByNotificationType(type);
     }
 
+    @Override
     public StaffUser getDetails(Integer k) {
         return staffUserRepository.findByUserId(k);
     }
 
+    @Override
     public StaffUser updateDetails(StaffUser staffUser) {
 
         StaffUser existing = staffUserRepository.findByUserId(staffUser.getUserId());

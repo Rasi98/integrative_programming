@@ -3,6 +3,11 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+const passregex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const phoneregex = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+const nameregex = /^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/;
+const emailregex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+
 export default class UserAccount extends Component {
   constructor(props) {
     super(props);
@@ -15,12 +20,20 @@ export default class UserAccount extends Component {
       position: "",
       username: "",
       password: "",
+      fnameError:false,
+      lnameError:false,
+      phoneError:false,
+      positionError:false,
+      passwordError:false,
+      emailError:false,
+      positionError:false,
+      usernameError:false
     };
   }
 
   componentDidMount() {
     const id=localStorage.getItem("id")
-    axios.post("http://localhost:9090/user/getDetails/"+id).then((res)=>{
+    axios.post("https://groupprojectmit.herokuapp.com/user/getDetails/"+id).then((res)=>{
       this.setState({
         fname:res.data.firstname,
         lname:res.data.lastname,
@@ -34,9 +47,11 @@ export default class UserAccount extends Component {
     })
   }
 
-  onchange=(e)=>{
-    this.setState({[e.target.name]:e.target.value})
-  }
+
+
+  // onchange=(e)=>{
+  //   this.setState({[e.target.name]:e.target.value})
+  // }
   onchangenotify=(e)=>{
     this.setState({notificationType:e.target.value})
   }
@@ -82,7 +97,7 @@ export default class UserAccount extends Component {
         notificationType:this.state.notificationType,
         position:this.state.position,
       }
-      axios.post("http://localhost:9090/user/updateDetails/"+idset,staffUser).then((res)=>{
+      axios.post("https://groupprojectmit.herokuapp.com/user/updateDetails/"+idset,staffUser).then((res)=>{
         console.log(res)
         const response=res.status;
         if(response===200){
@@ -93,6 +108,120 @@ export default class UserAccount extends Component {
         }
       })
     }
+  }
+
+  onChangefName= (event)=>{
+    let f = event.target.value
+    if(!nameregex.test(f)){
+      this.setState({
+        fnameError:true
+      })
+    }
+    else{
+       this.setState({
+      fname:event.target.value,
+      fnameError:false
+    })
+    }
+   
+  }
+  onChangelName= (event)=>{
+    let l = event.target.value
+    if(!nameregex.test(l)){
+      this.setState({
+        lnameError:true
+      })
+    }
+    else{
+      this.setState({
+      lname:event.target.value,
+      lnameError:false
+    })
+    }
+    
+  }
+
+  onchangePosition= (event)=>{
+    let l = event.target.value
+    if(!nameregex.test(l)){
+      this.setState({
+        positionError:true
+      })
+    }
+    else{
+      this.setState({
+      position:event.target.value,
+      positionError:false
+    })
+    }
+    
+  }
+
+  onchangeUsername= (event)=>{
+    let l = event.target.value
+    if(!nameregex.test(l)){
+      this.setState({
+        usernameError:true
+      })
+    }
+    else{
+      this.setState({
+      username:event.target.value,
+      usernameError:false
+    })
+    }
+    
+  }
+
+  onChangephoneNumber= (event)=>{
+    let p = event.target.value;
+    if(!phoneregex.test(p)){
+      this.setState({
+        phoneError:true
+      })
+      console.log("Error")
+    }
+    else{
+      this.setState({
+        phone:event.target.value,
+      phoneError:false
+    })
+    console.log(this.state.phone)
+    }
+    
+  }
+
+  onChangePassword = (event) => {
+    let p = event.target.value;
+    if(!passregex.test(p)){
+      this.setState({
+        passworderror:true
+      })
+      console.log("Error")
+    }
+    else{
+        this.setState({
+      password: event.target.value,
+      passworderror:false
+    })
+    }
+  
+  }
+
+  onChangeemail= (event)=>{
+    let e = event.target.value;
+    if(!emailregex.test(e)){
+      this.setState({
+        emailError:true
+      })
+    }
+    else{
+       this.setState({
+        email:event.target.value,
+      emailError:false
+    })
+    }
+   
   }
 
   successfulmessage = (msg) => {
@@ -113,6 +242,9 @@ export default class UserAccount extends Component {
       timer: 1500
     })
   }
+
+
+  
 
   render() {
     return (
@@ -142,10 +274,13 @@ export default class UserAccount extends Component {
                     disabled
                     id="fname"
                     name={"fname"}
-                    onChange={this.onchange}
+                    onChange={this.onChangefName}
                     type="text"
-                    value={this.state.fname}
+                    Value={this.state.fname}
                   />
+                  {this.state.fnameError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid Name</div>
+            :null}
                 </Form.Group>
               </Col>
               <Col>
@@ -156,10 +291,13 @@ export default class UserAccount extends Component {
                     id="lname"
                     disabled
                     name={"lname"}
-                    onChange={this.onchange}
+                    onChange={this.onChangelName}
                     type="text"
-                    value={this.state.lname}
+                    Value={this.state.lname}
                   />
+                                    {this.state.lnameError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid Name</div>
+            :null}
                 </Form.Group>
               </Col>
             </Row>
@@ -171,10 +309,13 @@ export default class UserAccount extends Component {
                     id="email"
                     disabled
                     name={"email"}
-                    onChange={this.onchange}
+                    onChange={this.onChangeemail}
                     type="text"
-                    value={this.state.email}
+                    Value={this.state.email}
                   />
+                    {this.state.emailError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid Email address</div>
+            :null}
                 </Form.Group>
               </Col>
               <Col>
@@ -184,10 +325,13 @@ export default class UserAccount extends Component {
                     id="phone"
                     disabled
                     name={"phone"}
-                    onChange={this.onchange}
+                    onChange={this.onChangephoneNumber}
                     type="text"
-                    value={this.state.phone}
+                    Value={this.state.phone}
                   />
+                        {this.state.phoneError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid number</div>
+            :null}
                 </Form.Group>
               </Col>
             </Row>
@@ -198,15 +342,15 @@ export default class UserAccount extends Component {
                   <Form.Control
                     id="notify"
                     disabled
-                    value={this.state.notificationType}
+                    Value={this.state.notificationType}
                     as="select"
                     custom
                     onChange={this.onchangenotify}
                     name="notificationtype"
                   >
-                    <option value={"email"}>Email</option>
-                    <option value={"sms"}>SMS</option>
-                    <option value={"call"}>Call</option>
+                    <option Value={"email"}>Email</option>
+                    <option Value={"sms"}>SMS</option>
+                    <option Value={"call"}>Call</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -217,10 +361,13 @@ export default class UserAccount extends Component {
                     id="position"
                     disabled
                     name={"position"}
-                    onChange={this.onchange}
+                    onChange={this.onchangePosition}
                     type="text"
-                    value={this.state.position}
+                    Value={this.state.position}
                   />
+                   {this.state.positionError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid Position</div>
+            :null}
                 </Form.Group>
               </Col>
             </Row>
@@ -234,9 +381,12 @@ export default class UserAccount extends Component {
                     disabled
                     type="text"
                     name={"username"}
-                    onChange={this.onchange}
-                    value={this.state.username}
+                    onChange={this.onchangeUsername}
+                    Value={this.state.username}
                   />
+                                     {this.state.usernameError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Enter a valid Username</div>
+            :null}
                 </Form.Group>
               </Col>
               <Col>
@@ -247,10 +397,14 @@ export default class UserAccount extends Component {
                     id="password"
                     disabled
                     name={"password"}
-                    onChange={this.onchange}
+                    onChange={this.onChangePassword}
                     type="text"
-                    value={this.state.password}
+                    Value={this.state.password}
                   />
+                  {this.state.passwordError ? 
+              <div className="errorMsg" style={{color:"red", fontSize:"11px"}}>Password should contain eight characters, at least one letter and one number</div>
+            :null}
+
                 </Form.Group>
               </Col>
             </Row>

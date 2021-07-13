@@ -19,6 +19,7 @@ public class ReadingsController {
     private TemperatureReadingService temperatureReadingService;
 
     //Endpoint to save temperature reading
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/addreading")
     public TemperatureReading addreading(@RequestBody TemperatureReading temperatureReading) throws IOException, MessagingException {
         return temperatureReadingService.saveTemperatureReading(temperatureReading);

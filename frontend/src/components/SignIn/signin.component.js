@@ -23,7 +23,7 @@ export default class SignIn extends Component {
       username:this.state.username,
       password:this.state.password
     }
-    axios.post("http://localhost:9090/user/signin",user).then((res)=>{
+    axios.post("https://groupprojectmit.herokuapp.com/user/signin",user).then((res)=>{
       console.log(res.data)
       const id=res.data
       if(id==="Okay"){
@@ -33,7 +33,7 @@ export default class SignIn extends Component {
         //alert("wrong credentials!")
         localStorage.setItem("id",id);
         this.successfulmessage("Login Successfull");
-        window.location="/dashboard"
+        this.props.history.push('/dashboard')
 
 
 

@@ -26,7 +26,6 @@ export default class UserAccount extends Component {
       positionError:false,
       passwordError:false,
       emailError:false,
-      positionError:false,
       usernameError:false
     };
   }
